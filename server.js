@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const morgan = require('morgan')
 const { sequelize } = require('./models')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
@@ -11,8 +12,19 @@ const app = express()
 //Load env vars
 dotenv.config({ path: './config/env.env' })
 
+// Route files
+const users = require('./routes/userRoutes')
+
 // Using JSON parser
 app.use(express.json())
+
+// Dev logging middleware
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
+
+// Mount routers
+app.use('/api/v1/users', users)
 
 app.get('/', (req, res) => {
     res.json({
