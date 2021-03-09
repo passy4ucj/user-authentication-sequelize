@@ -1,5 +1,5 @@
 const express = require('express')
-const { register, login, getUsers, getUser } = require('../controllers/userController')
+const { register, login, getUsers, getUser, updateUser, deleteUser } = require('../controllers/userController')
 const { protect, authorize } = require('../middleware/authMiddleware')
 
 
@@ -12,6 +12,8 @@ router.route('/')
 
 router.route('/:uuid') 
     .get(getUser)
+    .put(updateUser)
+    .delete(deleteUser)
 
 router.route('/login').post(login)
 

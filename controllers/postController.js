@@ -34,7 +34,10 @@ const getPosts = asyncHandler(async (req, res) => {
 })
 
 
+
+
 module.exports = {
     createPost,
     getPosts,
+
 }

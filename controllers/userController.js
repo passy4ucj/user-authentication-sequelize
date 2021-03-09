@@ -102,6 +102,46 @@ const getUser = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteUser = asyncHandler(async (req, res) => {
+    const uuid = req.params.uuid
+    try {
+        const user = await User.findOne({ where: { uuid } })
+
+        await user.destroy()
+        res.status(200).json({
+            success: true,
+            message: 'User deleted'
+        })
+    } catch (error) {
+        res.status(500)
+        throw new Error('Service unavailable')
+    }
+})
+
+
+const updateUser = asyncHandler(async (req, res) => {
+    const uuid = req.params.uuid
+    const { email, role } = req.body
+    try {
+        const user = await User.findOne({
+            where: { uuid }
+        })
+
+        user.email = email || user.email
+        user.role = role || user.role
+
+        await user.save()
+
+        res.status(200).json({
+            success: true,
+            user
+        })
+    } catch (error) {
+        res.status(500)
+        throw new Error('Server error')
+    }
+})
+
 
 
 module.exports = {
@@ -109,4 +149,6 @@ module.exports = {
     login,
     getUsers,
     getUser,
+    deleteUser,
+    updateUser
 }
