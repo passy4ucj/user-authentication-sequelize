@@ -14,6 +14,7 @@ dotenv.config({ path: './config/env.env' })
 
 // Route files
 const users = require('./routes/userRoutes')
+const posts = require('./routes/postRoutes')
 
 // Using JSON parser
 app.use(express.json())
@@ -25,6 +26,7 @@ if(process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api/v1/users', users)
+app.use('/api/v1/posts', posts)
 
 app.get('/', (req, res) => {
     res.json({
