@@ -86,7 +86,10 @@ const getUsers = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
     try {
         const uuid = req.params.uuid
-        const user = await User.findOne({ where: { uuid } })
+        const user = await User.findOne({ 
+            where: { uuid },
+            include: ['posts']
+         })
         
         res.status(200).json({
             success: true,

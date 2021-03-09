@@ -21,7 +21,7 @@ const createPost = asyncHandler(async (req, res) => {
 
 const getPosts = asyncHandler(async (req, res) => {
     try {
-        const posts = await Post.findAll()
+        const posts = await Post.findAll({ include: ['user'] })
 
         res.status(200).json({
             success: true,

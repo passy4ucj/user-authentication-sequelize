@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Post }) {
       // define association here
-      this.hasMany(Post, { foreignKey: 'userId' })
+      this.hasMany(Post, { foreignKey: 'userId', as: 'posts' })
     }
 
     toJSON(){
@@ -27,14 +27,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        notNull: { msg: 'User must have an email' },
+        notEmpty: { msg: 'email must not be empty' },
+        isEmail: { msg: 'Must be a valid email address' }
+      }
     },
     role: {
       type: DataTypes.ENUM('supervisor', 'admin', 'user'),
       allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have an role' },
+        notEmpty: { msg: 'role must not be empty' }
+      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have an password' },
+        notEmpty: { msg: 'password must not be empty' }
+      }
     },
   }, {
     sequelize,
