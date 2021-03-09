@@ -34,11 +34,6 @@ const register = asyncHandler(async (req, res) => {
             success: true,
             newUser
         })
-        // res.json({
-        //     email,
-        //     role,
-        //     password: await bcrypt.hash(password, salt)
-        // })
    
 })
 
@@ -72,17 +67,43 @@ const login = asyncHandler(async (req, res) => {
 
 
 const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.findAll()
-    const count = users.length
-    res.status(200).json({
-        success: true,
-        count,
-        users
-    })
+    try {
+
+        const users = await User.findAll()
+        const count = users.length
+        res.status(200).json({
+            success: true,
+            count,
+            users
+        })
+
+    } catch (error) {
+        res.status(500)
+        throw new Error(`Something went wrong`)
+    }
 })
+
+const getUser = asyncHandler(async (req, res) => {
+    try {
+        const uuid = req.params.uuid
+        const user = await User.findOne({ where: { uuid } })
+        
+        res.status(200).json({
+            success: true,
+            user
+        })
+
+    } catch (error) {
+        res.status(500)
+        throw new Error(`No user`)
+    }
+})
+
+
 
 module.exports = {
     register,
     login,
     getUsers,
+    getUser,
 }
