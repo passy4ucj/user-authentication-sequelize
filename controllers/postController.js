@@ -19,7 +19,22 @@ const createPost = asyncHandler(async (req, res) => {
 })
 
 
+const getPosts = asyncHandler(async (req, res) => {
+    try {
+        const posts = await Post.findAll()
+
+        res.status(200).json({
+            success: true,
+            posts
+        })
+    } catch (error) {
+        res.status(500)
+        throw new Error('No posts')
+    }
+})
+
+
 module.exports = {
     createPost,
-
+    getPosts,
 }
