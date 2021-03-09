@@ -40,4 +40,4 @@ const authorize = (...roles) => {
 }
 
 
-export { protect, authorize }
+module.exports =  { protect, authorize }
